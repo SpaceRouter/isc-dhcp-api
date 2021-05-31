@@ -6,7 +6,7 @@ import subprocess
 DHCPD_LEASES = '/var/lib/dhcp/dhcpd.leases'
 DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
 
-@route('/admin/addfix', method='POST')
+@route('/addfix', method='POST')
 def add_fix():
     hostname = request.forms.get('hostname')
     mac = request.forms.get('mac')
@@ -16,7 +16,7 @@ def add_fix():
     restart_dhcpd()
     return dict(status=True)
 
-@route('/admin/deletefix', method='POST')
+@route('/deletefix', method='POST')
 def delete_fix():
     host = request.forms.get('hostname')
     mac = request.forms.get('mac')
@@ -24,7 +24,7 @@ def delete_fix():
     restart_dhcpd()
     return dict(status=True)
 
-@route('/admin/restart', method='POST')
+@route('/restart', method='POST')
 def restart_dhcp():
     restart_dhcpd()
     return dict(status=True)

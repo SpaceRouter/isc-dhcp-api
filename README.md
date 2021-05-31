@@ -16,12 +16,12 @@ API List :
 **ADD static Leases:**
 Create a static DHCP lease
 
-    curl -d "hostname=test&mac=76%3Ae6%3Aa2%3A4b%3Ab2%3A62&ip=192.168.1.51" -X POST http://localhost:8080/admin/addfix
+    curl -d "hostname=test&mac=76%3Ae6%3Aa2%3A4b%3Ab2%3A62&ip=192.168.1.51" -X POST http://localhost:8080/addfix
 
 **DELETE static Leases:**
 Delete a static DHCP lease
 
-    curl -d "hostname=test&mac=76%3Ae6%3Aa2%3A4b%3Ab2%3A62" -X POST http://localhost:8080/admin/deletefix
+    curl -d "hostname=test&mac=76%3Ae6%3Aa2%3A4b%3Ab2%3A62" -X POST http://localhost:8080/deletefix
 
 **Data:**
 Retrieve data regarding static leases, current leases, free leases.
@@ -31,4 +31,4 @@ Retrieve data regarding static leases, current leases, free leases.
 **Restart:**
 Restarting the isc-dhcp-server service
 
-    curl -X POST http://localhost:8080/admin/restart
+    curl -X POST http://localhost:8080/restart
