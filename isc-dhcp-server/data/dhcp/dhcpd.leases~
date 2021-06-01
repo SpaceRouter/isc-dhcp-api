@@ -4,5 +4,17 @@
 # authoring-byte-order entry is generated, DO NOT DELETE
 authoring-byte-order little-endian;
 
+lease 192.168.1.50 {
+  starts 2 2021/06/01 13:01:23;
+  ends 3 2021/06/02 13:01:23;
+  tstp 3 2021/06/02 13:01:23;
+  cltt 2 2021/06/01 13:01:23;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 4e:65:fd:62:c7:31;
+  uid "\377r\371R\011\000\002\000\000\253\021$C\004GH\334(9";
+  client-hostname "Safe-Router-LAN";
+}
 server-duid "\000\001\000\001(H\346\373\234\353\350\015%\217";
 

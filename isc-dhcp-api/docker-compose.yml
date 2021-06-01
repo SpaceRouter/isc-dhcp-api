@@ -2,7 +2,10 @@ version: '3'
 services: 
   isc-dhcp-api:
     build: .
+    container_name: isc-dhcp-api
+    image: isc-dhcp-api
     ports: 
-     - 8080:8080
+     - "8080:8080"
     volumes:
      - "../isc-dhcp-server/data/dhcp:/dhcp"
+    restart: always
