@@ -1,15 +1,17 @@
 FROM alpine
-MAINTAINER feloeht
+
+LABEL "fr.esieespace.saferouter"="SAFEROUTER"
+LABEL fr.esieespace.saferouter.image.authors="theo.lefevre@edu.esiee.fr"
 
 RUN set -xe \
     && apk add --no-cache --purge -uU tzdata dhcp \
     && touch /var/lib/dhcp/dhcpd.leases \
     && rm -rf /var/cache/apk/* /tmp/*
 
-RUN mkdir -p data
-COPY data/entrypoint.sh /data/entrypoint.sh
-RUN chmod +x /data/entrypoint.sh
+RUN mkdir -p dhcp
+COPY src/entrypoint.sh /dhcp/entrypoint.sh
+RUN chmod +x /dhcp/entrypoint.sh
 
 EXPOSE 67/udp
 
-ENTRYPOINT ["/data/entrypoint.sh"]
+ENTRYPOINT ["/dhcp/entrypoint.sh"]

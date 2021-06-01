@@ -8,5 +8,6 @@ services:
     ports:
       - "67:67/udp"
     volumes:
-      - ./data/dhcp:/data/dhcp
+      - "../dhcp/var:/var/lib/dhcp/"
+      - "../dhcp/etc:/etc/dhcp"
     restart: always

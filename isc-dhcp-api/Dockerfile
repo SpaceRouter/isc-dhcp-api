@@ -1,7 +1,8 @@
 FROM python
-MAINTAINER feloeht
 
-RUN mkdir dhcp
+LABEL "fr.esieespace.saferouter"="SAFEROUTER"
+LABEL fr.esieespace.saferouter.image.authors="theo.lefevre@edu.esiee.fr"
+
 RUN mkdir /usr/src/app/
 COPY src /usr/src/app/
 

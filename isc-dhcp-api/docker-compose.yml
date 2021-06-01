@@ -5,7 +5,8 @@ services:
     container_name: isc-dhcp-api
     image: isc-dhcp-api
     ports: 
-     - "8080:8080"
+      - "8080:8080"
     volumes:
-     - "../isc-dhcp-server/data/dhcp:/dhcp"
+      - "../dhcp/var:/var/lib/dhcp/"
+      - "../dhcp/etc:/etc/dhcp"
     restart: always
