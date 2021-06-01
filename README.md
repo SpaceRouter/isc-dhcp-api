@@ -35,32 +35,42 @@ Return example:
 
 ```
 {
-   "fixed":{
-      
-   },
-   "staging":{
-      "192.168.1.51":{
-         "ends":"2021/05/31 20:20:48",
-         "starts":"2021/05/31 20:10:48",
-         "has_name":false,
-         "hostname":"saferouteur-Standard-PC-i440FX-PIIX-1996",
-         "binding":"active",
-         "state":true,
-         "mac":"76:e6:a2:4b:b2:62"
-      },
-      "192.168.1.50":{
-         "ends":"2021/05/31 20:18:47",
-         "starts":"2021/05/31 20:08:47",
-         "has_name":false,
-         "hostname":"Safe-Router-LAN",
-         "binding":"active",
-         "state":true,
-         "mac":"4e:65:fd:62:c7:31"
+   "free":[
+      {
+         "ip":"192.168.1.100",
+         "starts":"2021/06/01 22:54:39",
+         "ends":"2021/06/02 22:54:39",
+         "binding":"free",
+         "mac":"4a:9a:25:4d:07:69",
+         "hostname":"Safe-Router-LAN2"
       }
-   },
-   "free":{
-      
-   }
+   ],
+   "fixed":[
+      {
+         "binding":"fixed",
+         "hostname":"saferouteur-Standard-PC-i440FX-PIIX-1996",
+         "mac":"76:e6:a2:4b:b2:62",
+         "ip":"192.168.1.60"
+      }
+   ],
+   "staging":[
+      {
+         "ip":"192.168.1.50",
+         "starts":"2021/06/01 13:01:23",
+         "ends":"2021/06/02 13:01:23",
+         "binding":"active",
+         "mac":"4e:65:fd:62:c7:31",
+         "hostname":"Safe-Router-LAN"
+      },
+      {
+         "ip":"192.168.1.51",
+         "starts":"2021/06/01 22:54:39",
+         "ends":"2021/06/02 22:54:39",
+         "binding":"active",
+         "mac":"4a:9a:25:4d:07:19",
+         "hostname":"Safe-Router-LAN1"
+      }
+   ]
 }
 ```
 

@@ -18,3 +18,14 @@ lease 192.168.1.50 {
 }
 server-duid "\000\001\000\001(H\346\373\234\353\350\015%\217";
 
+lease 192.168.1.51 {
+  starts 2 2021/06/01 22:54:39;
+  ends 3 2021/06/02 22:54:39;
+  cltt 2 2021/06/01 22:54:39;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 4a:9a:25:4d:07:19;
+  uid "\377%M\007\031\000\001\000\001(Iw.J\232%M\007\031";
+  client-hostname "Safe-Router-LAN1";
+}
