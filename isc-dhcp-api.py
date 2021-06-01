@@ -1,4 +1,5 @@
 from bottle import route, run, request
+import json
 import os
 import sys
 import subprocess
@@ -14,7 +15,7 @@ def add_fix():
     print hostname, mac, ip
     add_fix(hostname, mac, ip)
     restart_dhcpd()
-    return dict(status=True)
+    return json.dumps({'status': 'true'})
 
 @route('/deletefix', method='POST')
 def delete_fix():
@@ -22,21 +23,21 @@ def delete_fix():
     mac = request.forms.get('mac')
     delete_fix(host, mac)
     restart_dhcpd()
-    return dict(status=True)
+    return json.dumps({'status': 'true'})
 
 @route('/restart', method='POST')
 def restart_dhcp():
     restart_dhcpd()
-    return dict(status=True)
+    return json.dumps({'status': 'true'})
 
 @route('/data.json')
 def index():
     free, fixed, staging = parse_dhcp_leases()
-    return dict(free=free, fixed=fixed, staging=staging)
+    return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():
-    free  = dict()
-    fixed  = dict()
+    free = dict()
+    fixed = dict()
     staging = dict()
 
     with open(DHCPD_LEASES, 'r') as f:
