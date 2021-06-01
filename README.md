@@ -33,7 +33,7 @@ Retrieve data regarding static leases, current leases, free leases.
 
 Return example:
 
-  {
+```{
      "fixed":{
      },
      "staging":{
@@ -59,6 +59,7 @@ Return example:
      "free":{
      }
   }
+```
 
 **Restart:**
 
