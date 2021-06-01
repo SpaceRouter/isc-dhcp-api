@@ -1,4 +1,4 @@
-from bottle import route, run, request
+from bottle import route, run, request, response
 import json
 import os
 import sys
@@ -6,8 +6,6 @@ import subprocess
 
 DHCPD_LEASES = '/var/lib/dhcp/dhcpd.leases'
 DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
-#DHCPD_LEASES = '/dhcp/dhcpd.leases'
-#DHCPD_CONF = '/dhcp/dhcpd.conf'
 
 @route('/addfix', method='POST')
 def add_fix():
@@ -16,6 +14,8 @@ def add_fix():
     ip = request.forms.get('ip')
     add_fix(hostname, mac, ip)
     restart_dhcpd()
+    response.status = 200
+    response.content_type = 'application/json'
     return json.dumps({'status': 'true'})
 
 @route('/deletefix', method='POST')
@@ -24,16 +24,22 @@ def delete_fix():
     mac = request.forms.get('mac')
     delete_fix(host, mac)
     restart_dhcpd()
+    response.status = 200
+    response.content_type = 'application/json'
     return json.dumps({'status': 'true'})
 
 @route('/restart', method='POST')
 def restart_dhcp():
     restart_dhcpd()
+    response.status = 200
+    response.content_type = 'application/json'
     return json.dumps({'status': 'true'})
 
 @route('/data.json')
 def index():
     free, fixed, staging = parse_dhcp_leases()
+    response.status = 200
+    response.content_type = 'application/json'
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():
