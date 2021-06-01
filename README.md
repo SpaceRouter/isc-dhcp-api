@@ -33,32 +33,35 @@ Retrieve data regarding static leases, current leases, free leases.
 
 Return example:
 
-```{
-     "fixed":{
-     },
-     "staging":{
-        "192.168.1.51":{
-           "ends":"2021/05/31 20:20:48",
-           "starts":"2021/05/31 20:10:48",
-           "has_name":false,
-           "hostname":"saferouteur-Standard-PC-i440FX-PIIX-1996",
-           "binding":"active",
-           "state":true,
-           "mac":"76:e6:a2:4b:b2:62"
-        },
-        "192.168.1.50":{
-           "ends":"2021/05/31 20:18:47",
-           "starts":"2021/05/31 20:08:47",
-           "has_name":false,
-           "hostname":"Safe-Router-LAN",
-           "binding":"active",
-           "state":true,
-           "mac":"4e:65:fd:62:c7:31"
-        }
-     },
-     "free":{
-     }
-  }
+```
+{
+   "fixed":{
+      
+   },
+   "staging":{
+      "192.168.1.51":{
+         "ends":"2021/05/31 20:20:48",
+         "starts":"2021/05/31 20:10:48",
+         "has_name":false,
+         "hostname":"saferouteur-Standard-PC-i440FX-PIIX-1996",
+         "binding":"active",
+         "state":true,
+         "mac":"76:e6:a2:4b:b2:62"
+      },
+      "192.168.1.50":{
+         "ends":"2021/05/31 20:18:47",
+         "starts":"2021/05/31 20:08:47",
+         "has_name":false,
+         "hostname":"Safe-Router-LAN",
+         "binding":"active",
+         "state":true,
+         "mac":"4e:65:fd:62:c7:31"
+      }
+   },
+   "free":{
+      
+   }
+}
 ```
 
 **Restart:**
