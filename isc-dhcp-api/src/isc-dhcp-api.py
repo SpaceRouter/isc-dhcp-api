@@ -16,7 +16,7 @@ def add_fix():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    return json.dumps({'status': 'true'})
+    return json.dumps({'status': True})
 
 @route('/deletefix', method='POST')
 def delete_fix():
@@ -26,14 +26,14 @@ def delete_fix():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    return json.dumps({'status': 'true'})
+    return json.dumps({'status': True})
 
 @route('/restart', method='POST')
 def restart_dhcp():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    return json.dumps({'status': 'true'})
+    return json.dumps({'status': True})
 
 @route('/data.json')
 def index():
@@ -43,18 +43,19 @@ def index():
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():
-    free = dict()
-    fixed = dict()
-    staging = dict()
+    free = []
+    fixed = []
+    staging = []
 
     with open(DHCPD_LEASES, 'r') as f:
         for line in f:
             if line.startswith('lease'):
-                item = read_lease(f)
+                lease_ip = line.split(' ')[1]
+                item = read_lease(f, lease_ip)
                 if item['binding'] == 'active':
-                    staging[line.split(' ')[1]] = item
+                    staging.append(item)
                 else:
-                    free[line.split(' ')[1]] = item
+                    free.append(item)
 
     with open(DHCPD_CONF, 'r') as f:
         for line in f:
@@ -68,28 +69,24 @@ def parse_dhcp_leases():
                     if ws[2] in 'hardware':
                         item["mac"] = ws[4].replace(';\n', '')
                     elif ws[2] in 'fixed-address':
-                        ip = ws[3].replace(';\n', '')
-                fixed[ip] = item
+                        item["ip"] = ws[3].replace(';\n', '')
+                fixed.append(item)
 
     return free, fixed, staging
 
-def read_lease(f):
+def read_lease(f, ip):
     d = dict()
-    d['has_name'] = False
     for l in f:
         if l.startswith('}'):
             break
         ws = l.split(' ')
+        d['ip'] = ip
         if ws[2] in 'starts':
             d['starts'] = ws[4] + ' ' + ws[5].replace(';\n', '')
         elif ws[2] in 'ends':
             d['ends'] = ws[4] + ' ' + ws[5].replace(';\n', '')
         elif ws[2] in 'binding':
             d['binding'] = ws[4].replace(';\n', '')
-            if d['binding'] == 'active':
-                d['state'] = True
-            else:
-                d['state'] = False
         elif ws[2] in 'hardware':
             d['mac'] = ws[4].replace(';\n', '')
         elif ws[2] in 'client-hostname':
