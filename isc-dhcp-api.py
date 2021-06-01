@@ -4,8 +4,10 @@ import os
 import sys
 import subprocess
 
-DHCPD_LEASES = '/var/lib/dhcp/dhcpd.leases'
-DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
+#DHCPD_LEASES = '/var/lib/dhcp/dhcpd.leases'
+#DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
+DHCPD_LEASES = './dhcpd.leases'
+DHCPD_CONF = './dhcpd.conf'
 
 @route('/addfix', method='POST')
 def add_fix():
