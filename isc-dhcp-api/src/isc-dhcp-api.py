@@ -16,6 +16,9 @@ def add_fix():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/deletefix', method='POST')
@@ -26,6 +29,9 @@ def delete_fix():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/restart', method='POST')
@@ -33,6 +39,9 @@ def restart_dhcp():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/data.json')
@@ -40,6 +49,9 @@ def index():
     free, fixed, staging = parse_dhcp_leases()
     response.status = 200
     response.content_type = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():

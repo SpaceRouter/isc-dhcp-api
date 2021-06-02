@@ -5,10 +5,9 @@
 authoring-byte-order little-endian;
 
 lease 192.168.1.50 {
-  starts 2 2021/06/01 13:01:23;
-  ends 3 2021/06/02 13:01:23;
-  tstp 3 2021/06/02 13:01:23;
-  cltt 2 2021/06/01 13:01:23;
+  starts 3 2021/06/02 01:01:22;
+  ends 4 2021/06/03 01:01:22;
+  cltt 3 2021/06/02 01:01:22;
   binding state active;
   next binding state free;
   rewind binding state free;
@@ -16,16 +15,25 @@ lease 192.168.1.50 {
   uid "\377r\371R\011\000\002\000\000\253\021$C\004GH\334(9";
   client-hostname "Safe-Router-LAN";
 }
-server-duid "\000\001\000\001(H\346\373\234\353\350\015%\217";
-
 lease 192.168.1.51 {
-  starts 2 2021/06/01 22:54:39;
-  ends 3 2021/06/02 22:54:39;
-  cltt 2 2021/06/01 22:54:39;
+  starts 3 2021/06/02 10:25:49;
+  ends 4 2021/06/03 10:25:49;
+  cltt 3 2021/06/02 10:25:49;
   binding state active;
   next binding state free;
   rewind binding state free;
   hardware ethernet 4a:9a:25:4d:07:19;
   uid "\377%M\007\031\000\001\000\001(Iw.J\232%M\007\031";
   client-hostname "Safe-Router-LAN1";
+}
+lease 192.168.1.50 {
+  starts 3 2021/06/02 13:01:21;
+  ends 4 2021/06/03 13:01:21;
+  cltt 3 2021/06/02 13:01:21;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 4e:65:fd:62:c7:31;
+  uid "\377r\371R\011\000\002\000\000\253\021$C\004GH\334(9";
+  client-hostname "Safe-Router-LAN";
 }
