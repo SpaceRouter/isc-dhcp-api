@@ -11,6 +11,8 @@ DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
 
 def enable_cors(fn):
   def _enable_cors(*args, **kwargs):
+      response.status = 200
+      response.content_type = 'application/json'
       response.headers['Access-Control-Allow-Origin'] = '*'
       response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
       response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
@@ -30,36 +32,28 @@ def add_fix():
     ip = data['ip']
     add_fix(hostname, mac, ip)
     restart_dhcpd()
-    response.status = 200
-    response.content_type = 'application/json'
     return json.dumps({'status': True})
 
-@route('/deletefix', method='POST')
+@route('/deletefix', method=['POST','OPTIONS'])
 @enable_cors
 def delete_fix():
     data = request.json
     hostname = data['hostname']
     mac = data['mac']
-    delete_fix(host, mac)
+    delete_fix(hostname, mac)
     restart_dhcpd()
-    response.status = 200
-    response.content_type = 'application/json'
     return json.dumps({'status': True})
 
-@route('/restart', method='POST')
+@route('/restart', method=['POST','OPTIONS'])
 @enable_cors
 def restart_dhcp():
     restart_dhcpd()
-    response.status = 200
-    response.content_type = 'application/json'
     return json.dumps({'status': True})
 
 @route('/data.json')
 @enable_cors
 def index():
     free, fixed, staging = parse_dhcp_leases()
-    response.status = 200
-    response.content_type = 'application/json'
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():
