@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from bottle import route, run, request, response
 import json
 import os
@@ -7,51 +9,57 @@ import subprocess
 DHCPD_LEASES = '/var/lib/dhcp/dhcpd.leases'
 DHCPD_CONF = '/etc/dhcp/dhcpd.conf'
 
-@route('/addfix', method='POST')
+def enable_cors(fn):
+  def _enable_cors(*args, **kwargs):
+      response.headers['Access-Control-Allow-Origin'] = '*'
+      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
+      response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+
+      if request.method != 'OPTIONS':
+          # actual request; reply with the actual response
+          return fn(*args, **kwargs)
+
+  return _enable_cors
+
+@route('/addfix', method=['POST','OPTIONS'])
+@enable_cors
 def add_fix():
-    hostname = request.forms.get('hostname')
-    mac = request.forms.get('mac')
-    ip = request.forms.get('ip')
+    data = request.json
+    hostname = data['hostname']
+    mac = data['mac']
+    ip = data['ip']
     add_fix(hostname, mac, ip)
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/deletefix', method='POST')
+@enable_cors
 def delete_fix():
-    host = request.forms.get('hostname')
-    mac = request.forms.get('mac')
+    data = request.json
+    hostname = data['hostname']
+    mac = data['mac']
     delete_fix(host, mac)
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/restart', method='POST')
+@enable_cors
 def restart_dhcp():
     restart_dhcpd()
     response.status = 200
     response.content_type = 'application/json'
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'status': True})
 
 @route('/data.json')
+@enable_cors
 def index():
     free, fixed, staging = parse_dhcp_leases()
     response.status = 200
     response.content_type = 'application/json'
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'GET'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
 def parse_dhcp_leases():
