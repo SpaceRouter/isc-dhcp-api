@@ -21,12 +21,19 @@ def enable_cors(fn):
 
   return _enable_cors
 
-@route('/data.json')
+@route('/data')
 @enable_cors
 def index():
     free, fixed, staging = parse_dhcp_leases()
     response.status = 200
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
+
+@route('/scope')
+@enable_cors
+def scope():
+    scope = parse_dhcp_scope()
+    response.status = 200
+    return json.dumps({'scope': scope})
 
 @route('/addfix', method=['POST','OPTIONS'])
 @enable_cors
@@ -91,6 +98,32 @@ def parse_dhcp_leases():
                 fixed.append(item)
 
     return free, fixed, staging
+
+def parse_dhcp_scope():
+    scope = []
+
+    with open(DHCPD_CONF, 'r') as f:
+        for line in f:
+            if line.startswith('subnet'):
+                item = dict(scope=line.split(' ')[1])
+                for l in f:
+                    if l.startswith('}'):
+                        break
+                    ws = l.split(' ')
+                    if ws[2] in 'range':
+                        item["start"] = ws[3]
+                        item["end"] = ws[4].replace(';\n', '')
+                    elif ws[3] in 'subnet-mask':
+                        item["subnet-mask"] = ws[4].replace(';\n', '')
+                    elif ws[3] in 'broadcast-address':
+                        item["broadcast-address"] = ws[4].replace(';\n', '')
+                    elif ws[3] in 'domain-name':
+                        item["domain-name"] = ws[4].replace('"', '').replace(';\n', '')
+                    elif ws[3] in 'domain-name-servers':
+                        item["domain-name-servers"] = ws[4].replace(';\n', '')
+                scope.append(item)
+
+    return scope
 
 def read_lease(f, ip):
     d = dict()
