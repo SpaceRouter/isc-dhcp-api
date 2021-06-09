@@ -1,7 +1,7 @@
 FROM alpine
 
-LABEL "fr.esieespace.saferouter"="SAFEROUTER"
-LABEL fr.esieespace.saferouter.image.authors="theo.lefevre@edu.esiee.fr"
+LABEL "space.opengate"="SAFEROUTER"
+LABEL space.opengate.image.authors="theo.lefevre@edu.esiee.fr"
 
 RUN set -xe \
     && apk add --no-cache --purge -uU tzdata dhcp \

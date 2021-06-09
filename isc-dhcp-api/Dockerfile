@@ -1,7 +1,7 @@
 FROM python
 
-LABEL "fr.esieespace.saferouter"="SAFEROUTER"
-LABEL fr.esieespace.saferouter.image.authors="theo.lefevre@edu.esiee.fr"
+LABEL "space.opengate"="SAFEROUTER"
+LABEL space.opengate.image.authors="theo.lefevre@edu.esiee.fr"
 
 RUN mkdir /usr/src/app/
 COPY src /usr/src/app/
