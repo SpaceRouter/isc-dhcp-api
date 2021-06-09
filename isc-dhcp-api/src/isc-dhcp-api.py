@@ -5,9 +5,6 @@ import json
 import os
 import subprocess
 
-os.environ['DHCPD_LEASES'] = '/var/lib/dhcp/dhcpd.leases'
-os.environ['DHCPD_CONF'] = '/etc/dhcp/dhcpd.conf'
-
 DHCPD_LEASES    = os.environ['DHCPD_LEASES']
 DHCPD_CONF      = os.environ['DHCPD_CONF']
 

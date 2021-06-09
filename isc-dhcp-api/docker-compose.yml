@@ -4,6 +4,9 @@ services:
     build: .
     container_name: isc-dhcp-api
     image: isc-dhcp-api
+    environment: 
+      DHCPD_LEASES: '/var/lib/dhcp/dhcpd.leases'
+      DHCPD_CONF: '/etc/dhcp/dhcpd.conf'
     ports: 
       - "8080:8080"
     volumes:
