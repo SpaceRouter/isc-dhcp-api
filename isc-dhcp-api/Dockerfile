@@ -1,6 +1,7 @@
-FROM python
+FROM python:slim
 
-LABEL "space.opengate"="SAFEROUTER"
+LABEL "space.opengate.vendor"="SpaceRouter"
+LABEL org.opencontainers.image.source https://github.com/SpaceRouter/isc-dhcp-api
 LABEL space.opengate.image.authors="theo.lefevre@edu.esiee.fr"
 
 RUN mkdir /usr/src/app/

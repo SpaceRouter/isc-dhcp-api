@@ -21,21 +21,21 @@ def enable_cors(fn):
 
   return _enable_cors
 
-@route('/data')
+@route('/dhcp/leases')
 @enable_cors
 def index():
     free, fixed, staging = parse_dhcp_leases()
     response.status = 200
     return json.dumps({'free': free, 'fixed': fixed, 'staging': staging})
 
-@route('/scope')
+@route('/dhcp/scope')
 @enable_cors
 def scope():
     scope = parse_dhcp_scope()
     response.status = 200
     return json.dumps({'scope': scope})
 
-@route('/addfix', method=['POST','OPTIONS'])
+@route('/dhcp/addfix', method=['POST','OPTIONS'])
 @enable_cors
 def add_fix():
     data = request.json
@@ -48,7 +48,7 @@ def add_fix():
     response.status = 200
     return json.dumps({'status': True})
 
-@route('/deletefix', method=['POST','OPTIONS'])
+@route('/dhcp/deletefix', method=['POST','OPTIONS'])
 @enable_cors
 def delete_fix():
     data = request.json
@@ -60,7 +60,7 @@ def delete_fix():
     response.status = 200
     return json.dumps({'status': True})
 
-@route('/restart', method=['POST','OPTIONS'])
+@route('/dhcp/restart', method=['POST','OPTIONS'])
 @enable_cors
 def restart_dhcp():
     restart_dhcpd()

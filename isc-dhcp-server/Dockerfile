@@ -1,17 +1,17 @@
-FROM alpine
+FROM alpine:latest
 
-LABEL "space.opengate"="SAFEROUTER"
+LABEL "space.opengate.vendor"="SpaceRouter"
+LABEL org.opencontainers.image.source https://github.com/SpaceRouter/isc-dhcp-api
 LABEL space.opengate.image.authors="theo.lefevre@edu.esiee.fr"
 
-RUN set -xe \
-    && apk add --no-cache --purge -uU tzdata dhcp \
-    && touch /var/lib/dhcp/dhcpd.leases \
-    && rm -rf /var/cache/apk/* /tmp/*
+RUN apk add --no-cache --purge -uU tzdata dhcp
+RUN touch /var/lib/dhcp/dhcpd.leases
+RUN rm -rf /var/cache/apk/* /tmp/*
 
 RUN mkdir -p dhcp
-COPY src/entrypoint.sh /dhcp/entrypoint.sh
+COPY entrypoint.sh /dhcp/entrypoint.sh
 RUN chmod +x /dhcp/entrypoint.sh
 
 EXPOSE 67/udp
 
-ENTRYPOINT ["/dhcp/entrypoint.sh"]
+ENTRYPOINT ["sh", "/dhcp/entrypoint.sh"]

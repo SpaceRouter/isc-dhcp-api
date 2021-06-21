@@ -1,15 +1,23 @@
-version: '3'
-services: 
+version: "3"
+services:
   isc-dhcp-api:
-    build: .
+    image: ghcr.io/spacerouter/isc-dhcp-api:latest
     container_name: isc-dhcp-api
-    image: isc-dhcp-api
-    environment: 
+    environment:
       DHCPD_LEASES: '/var/lib/dhcp/dhcpd.leases'
       DHCPD_CONF: '/etc/dhcp/dhcpd.conf'
-    ports: 
-      - "8080:8080"
+    networks:
+     - traefik-public
     volumes:
-      - "../dhcp/var:/var/lib/dhcp/"
-      - "../dhcp/etc:/etc/dhcp"
+      - "/etc/sr/dhcp/data/var:/var/lib/dhcp/"
+      - "/etc/sr/dhcp/data/etc:/etc/dhcp/"
+    labels:
+      traefik.http.services.dhcp.loadbalancer.server.port: '8080'
+      traefik.http.routers.dhcp.rule: (Host(`api.opengate.lan`) && PathPrefix(`/dhcp`))
+      traefik.http.routers.dhcp.entrypoints: web
+      traefik.enable: 'true'
+      traefik.http.routers.dhcp.service: dhcp
     restart: always
+networks:
+  traefik-public:
+    external: true

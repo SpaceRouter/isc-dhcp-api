@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Initialize the lease file if it doesn't exist.
 touch /var/lib/dhcp/dhcpd.leases
